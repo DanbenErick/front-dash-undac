@@ -1,13 +1,28 @@
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import { getDepartamentosForSelect,  getDistritoForSelect,  getProvinciaForSelect, getUbigeo } from './estudiantes.js'
 
 
 // import 'datatables.net/css/jquery.dataTables.css';
 // btnCrearProceso.addEventListener('click', abrirModal)
-// Función para mostrar los datos en una tabla
+// Función para mostrar los datos en una tablaa
 
-
-axios.get('http://localhost:8000/api/administrador/get-procesos')
+document.addEventListener('DOMContentLoaded', () => {
+  if(window.location.pathname.includes('estudiantes.html')) {
+    getDepartamentosForSelect()
+    
+    selectDepartamentoEstudiante.addEventListener("change", () => {
+        getProvinciaForSelect(selectDepartamentoEstudiante.value)
+    })
+    selectProvinciaEstudiante.addEventListener("change", () => {
+        getDistritoForSelect(selectDepartamentoEstudiante.value, selectProvinciaEstudiante.value)
+    })
+    selectDistritoEstudiante.addEventListener("change", () => {
+      getUbigeo(selectDepartamentoEstudiante.value, selectProvinciaEstudiante.value, selectDistritoEstudiante.value)
+    })
+  }
+  if(window.location.pathname.includes('procesos.html')) {
+    axios.get('http://localhost:8000/api/administrador/get-procesos')
 .then(response => {
     console.log(response.data)
     // Presenta los datos en una tabla
@@ -73,4 +88,6 @@ btnGuardarNuevoProceso.addEventListener('click', () => {
         // Manejar errores de la petición
         console.error('Error en la petición:', error);
       });
+})
+  }
 })
