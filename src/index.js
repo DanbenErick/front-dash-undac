@@ -1,18 +1,25 @@
 import Swal from 'sweetalert2'
-import axios, { getAdapter } from 'axios'
-import { getDepartamentosForSelect,  getDiscapacidades,  getDistritoForSelect,  getProvinciaForSelect, getUbigeo, getEtnicas, getProcesos } from './estudiantes.js'
-
+import axios from 'axios'
+import { getSedes, getDepartamentosForSelect,  getDiscapacidades,  getDistritoForSelect,  getProvinciaForSelect, getUbigeo, getEtnicas, getProcesos, getProgramasEstudio, setDatosComplementarios } from './estudiantes.js'
+import './login.js'
+import './register.js'
+import './data.js'
 
 // import 'datatables.net/css/jquery.dataTables.css';
 // btnCrearProceso.addEventListener('click', abrirModal)
 // Función para mostrar los datos en una tablaa
 
 document.addEventListener('DOMContentLoaded', () => {
+  
   if(window.location.pathname.includes('estudiantes.html')) {
+    
     getDepartamentosForSelect()
     getDiscapacidades()
     getEtnicas()
     getProcesos()
+    getSedes()
+    getProgramasEstudio()
+
     selectDepartamentoEstudiante.addEventListener("change", () => {
         getProvinciaForSelect(selectDepartamentoEstudiante.value)
     })
@@ -23,6 +30,44 @@ document.addEventListener('DOMContentLoaded', () => {
       getUbigeo(selectDepartamentoEstudiante.value, selectProvinciaEstudiante.value, selectDistritoEstudiante.value)
     })
   }
+
+
+
+  guardarDatosComplementarias.addEventListener('click', () => {
+    
+
+    const data = {
+        apellidosNombres: apellidosNombres.value,
+        celularApoderado: celularApoderado.value,
+        dniApoderado: dniApoderado.value,
+        selectModalidad: selectModalidad.value,
+        anioConclusion: anioConclusion.value,
+        tipoColegio: tipoColegio.value,
+        nombreColegio: nombreColegio.value,
+        selectSedeExamen: selectSedeExamen.value,
+        selectProgramaEstudio: selectProgramaEstudio.value,
+        genero: genero.value,
+        fechaNacimiento: fechaNacimiento.value,
+        inputUbigeo: inputUbigeo.value,
+        selectDepartamentoEstudiante: selectDepartamentoEstudiante.value,
+        selectProvinciaEstudiante: selectProvinciaEstudiante.value,
+        selectDistritoEstudiante: selectDistritoEstudiante.value,
+        direccionActual: direccionActual.value,
+        discapacidad: discapacidad.value,
+        tipoDiscapacidad: tipoDiscapacidad.value,
+        identidadEtnica: identidadEtnica.value,
+        celular: celular.value,
+        telefonoFijo: telefonoFijo.value,
+        foto : foto.value,
+    }
+    setDatosComplementarios(data)
+    
+})
+
+
+
+
+
   if(window.location.pathname.includes('procesos.html')) {
     axios.get('http://localhost:8000/api/administrador/get-procesos')
 .then(response => {

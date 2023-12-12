@@ -1,12 +1,52 @@
 import axios from 'axios'
 
+
+
+
+
+
+
+
+const setDatosComplementarios = (data) => {
+    axios.post('http://localhost:8000/api/estudiantes/registrar-datos-postulante', data)
+}
+
+const getSedes = () => {
+    
+    axios.get('http://localhost:8000/api/estudiantes/get-sedes')
+    .then(resp => {
+        console.log(resp.data)
+        
+        resp.data.forEach(function(data) {
+            var option = document.createElement("option");
+            option.value = data.sede
+            option.text = data.sede;
+            selectSedeExamen.add(option);
+        });
+    })
+}
+
+const getProgramasEstudio = () => {
+    
+    axios.get('http://localhost:8000/api/estudiantes/get-programas-estudio')
+    .then(resp => {
+        console.log(resp.data)
+        
+        resp.data.forEach(function(data) {
+            var option = document.createElement("option");
+            option.value = data.nombre
+            option.text = data.nombre;
+            selectProgramaEstudio.add(option);
+        });
+    })
+}
 const getProcesos = () => {
     axios.get('http://localhost:8000/api/administrador/get-procesos')
     .then(resp => {
         console.log(resp.data)
-
+        const procesosAbiertos = resp.data.filter(obj => obj.estado == 'abierto')
         // Llenar las opciones dinámicamente
-        resp.data.forEach(function(data) {
+        procesosAbiertos.forEach(function(data) {
             var option = document.createElement("option");
             option.value = data.nombre
             option.text = data.nombre;
@@ -92,6 +132,6 @@ const getUbigeo = (departamento, provincia, distrito) => {
         inputUbigeo.value = resp.data[0].ubigeo
     })
 }
-export { getDepartamentosForSelect, getDistritoForSelect, getProvinciaForSelect, getUbigeo, getDiscapacidades, getEtnicas, getProcesos }
+export { getProgramasEstudio, getDepartamentosForSelect, getDistritoForSelect, getProvinciaForSelect, getUbigeo, getDiscapacidades, getEtnicas, getProcesos, getSedes, setDatosComplementarios }
 
 
