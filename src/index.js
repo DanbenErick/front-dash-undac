@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2'
-import axios from 'axios'
-import { getDepartamentosForSelect,  getDistritoForSelect,  getProvinciaForSelect, getUbigeo } from './estudiantes.js'
+import axios, { getAdapter } from 'axios'
+import { getDepartamentosForSelect,  getDiscapacidades,  getDistritoForSelect,  getProvinciaForSelect, getUbigeo, getEtnicas, getProcesos } from './estudiantes.js'
 
 
 // import 'datatables.net/css/jquery.dataTables.css';
@@ -10,7 +10,9 @@ import { getDepartamentosForSelect,  getDistritoForSelect,  getProvinciaForSelec
 document.addEventListener('DOMContentLoaded', () => {
   if(window.location.pathname.includes('estudiantes.html')) {
     getDepartamentosForSelect()
-    
+    getDiscapacidades()
+    getEtnicas()
+    getProcesos()
     selectDepartamentoEstudiante.addEventListener("change", () => {
         getProvinciaForSelect(selectDepartamentoEstudiante.value)
     })
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
         // Repite el proceso para estado y fecha
         const estadoCell = document.createElement("td");
-        const estadoText = document.createTextNode(item.id);
+        const estadoText = document.createTextNode(item.estado);
         estadoCell.appendChild(estadoText);
         row.appendChild(estadoCell);
       
@@ -82,6 +84,7 @@ btnGuardarNuevoProceso.addEventListener('click', () => {
             estado.value = ""
             fecha.value = ""
             btnCloseModalProceso.click()
+            location.reload()
         }
       })
       .catch(error => {

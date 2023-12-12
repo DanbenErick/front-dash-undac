@@ -1,5 +1,51 @@
 import axios from 'axios'
 
+const getProcesos = () => {
+    axios.get('http://localhost:8000/api/administrador/get-procesos')
+    .then(resp => {
+        console.log(resp.data)
+
+        // Llenar las opciones dinámicamente
+        resp.data.forEach(function(data) {
+            var option = document.createElement("option");
+            option.value = data.nombre
+            option.text = data.nombre;
+            selectModalidad.add(option);
+        });
+    })
+}
+
+const getDiscapacidades = () => {
+    axios.get('http://localhost:8000/api/estudiantes/get-discapacidades')
+    .then(resp => {
+        console.log(resp.data)
+
+        // Llenar las opciones dinámicamente
+        resp.data.forEach(function(data) {
+            var option = document.createElement("option");
+            option.value = data.discapacidad
+            option.text = data.discapacidad;
+            tipoDiscapacidad.add(option);
+        });
+    })
+    .catch(err => console.error(err))
+}
+
+const getEtnicas = () => {
+    axios.get('http://localhost:8000/api/estudiantes/get-etnicas')
+    .then(resp => {
+        console.log(resp.data)
+
+        // Llenar las opciones dinámicamente
+        resp.data.forEach(function(data) {
+            var option = document.createElement("option");
+            option.value = data.etnia
+            option.text = data.etnia;
+            identidadEtnica.add(option);
+        });
+    })
+    .catch(err => console.error(err))
+}
 
 const getDepartamentosForSelect = () => {
     axios.get('http://localhost:8000/api/estudiantes/get-departamentos')
@@ -46,6 +92,6 @@ const getUbigeo = (departamento, provincia, distrito) => {
         inputUbigeo.value = resp.data[0].ubigeo
     })
 }
-export { getDepartamentosForSelect, getDistritoForSelect, getProvinciaForSelect, getUbigeo }
+export { getDepartamentosForSelect, getDistritoForSelect, getProvinciaForSelect, getUbigeo, getDiscapacidades, getEtnicas, getProcesos }
 
 
