@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+    if(localStorage.getItem('token') != "") window.location = 'voucher.html'
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro</title>
@@ -49,7 +52,7 @@
       <input type="text" class="form-control" id="username" name="username" required>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Correo electrónico:</label>
+      <label for="email" class="form-label">Nombre</label>
       <input type="email" class="form-control" id="email" name="email" required>
     </div>
     <div class="mb-3">
