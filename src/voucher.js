@@ -5,6 +5,7 @@ import {
      guardarVoucher
 } from './api/administrador'
 import Swal from 'sweetalert2'
+import { validarFormulario } from './util/util'
 const Toast = Swal.mixin({
      toast: true,
      position: 'top-end',
@@ -103,27 +104,56 @@ const searchEstudianteFromDNI = () => {
 }
 
 const setVoucher = (_) => {
-     containerSpinner.style.display = 'flex'
-     const tipoVoucher = selectTipoVoucherFormVoucher.value
-     const fecha = inputFechaFormVoucher.value
-     const nombreCompleto = inputNombreCompletoFormVoucher.value
-     const dni = inputDNIFormVoucher.value
-     const monto = inputMontoFormVoucher.value
-     const codigo = inputCodigoFormVoucher.value
-     const data = { tipoVoucher, fecha, nombreCompleto, dni, monto, codigo }
-     guardarVoucher(data, (resp) => {
-          if (resp.data.affectedRows) {
-               Toast.fire({
-                    icon: 'success',
-                    title: 'Se guardo correctamente el voucher'
+     if(!validarFormulario('formGuardarVoucher')['ok']) {
+        Toast.fire({
+            icon: 'warning',
+            title: 'Rellena todos los datos requeridos'
+       })
+       return;
+     }
+     Swal.fire({
+          title: 'Voucher?',
+          text: 'Desear guardar el voucher?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, deseo guardar'
+     }).then((result) => {
+          if (result.isConfirmed) {
+               containerSpinner.style.display = 'flex'
+               const tipoVoucher = selectTipoVoucherFormVoucher.value
+               const fecha = inputFechaFormVoucher.value
+               const nombreCompleto = inputNombreCompletoFormVoucher.value
+               const dni = inputDNIFormVoucher.value
+               const monto = inputMontoFormVoucher.value
+               const codigo = inputCodigoFormVoucher.value
+               const data = {
+                    tipoVoucher,
+                    fecha,
+                    nombreCompleto,
+                    dni,
+                    monto,
+                    codigo
+               }
+               guardarVoucher(data, (resp) => {
+                    if (resp.data.affectedRows) {
+                         Toast.fire({
+                              icon: 'success',
+                              title: 'Se guardo correctamente el voucher'
+                         })
+                         setDataInTableVouchers()
+                    } else {
+                         Toast.fire({
+                              icon: 'error',
+                              title: 'Ocurrio un error'
+                         })
+                    }
                })
-               setDataInTableVouchers()
-          } else {
-               Toast.fire({ icon: 'error', title: 'Ocurrio un error' })
+
+               containerSpinner.style.display = 'none'
           }
      })
-
-     containerSpinner.style.display = 'none'
 }
 
 document.addEventListener('DOMContentLoaded', () => {

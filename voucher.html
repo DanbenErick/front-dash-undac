@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
      <head>
@@ -44,28 +45,10 @@
                     <i class="fas fa-bars"></i>
                </button>
                <!-- Navbar Search-->
-               <form
-                    class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
-               >
-                    <div class="input-group">
-                         <input
-                              class="form-control"
-                              type="text"
-                              placeholder="Search for..."
-                              aria-label="Search for..."
-                              aria-describedby="btnNavbarSearch"
-                         />
-                         <button
-                              class="btn btn-primary"
-                              id="btnNavbarSearch"
-                              type="button"
-                         >
-                              <i class="fas fa-search"></i>
-                         </button>
-                    </div>
-               </form>
+               
                <!-- Navbar-->
                <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                    
                     <li class="nav-item dropdown">
                          <a
                               class="nav-link dropdown-toggle"
@@ -78,9 +61,9 @@
                          ></a>
                          <ul
                               class="dropdown-menu dropdown-menu-end"
-                              aria-labelledby="navbarDropdown"
-                         >
-                              <li>
+                              aria-labelledby="navbarDropdown">
+                              <!-- <li><a class="dropdown-item" id="nombreUsuarioDashboard" style="font-weight: bold;"></a></li> -->
+                              <!-- <li>
                                    <a class="dropdown-item" href="#!"
                                         >Settings</a
                                    >
@@ -89,10 +72,10 @@
                                    <a class="dropdown-item" href="#!"
                                         >Activity Log</a
                                    >
-                              </li>
+                              </li> -->
                               <li><hr class="dropdown-divider" /></li>
                               <li>
-                                   <a class="dropdown-item" href="#!">Logout</a>
+                                   <a class="dropdown-item" href="#!">Cerrar sesion</a>
                               </li>
                          </ul>
                     </li>
@@ -128,9 +111,9 @@
                                    </a>
                               </div>
                          </div>
-                         <div class="sb-sidenav-footer">
-                              <div class="small">Logged in as:</div>
-                              Start Bootstrap
+                         <div class="sb-sidenav-footer d-flex flex-column justify-content-center align-items-center">
+                              <div class="fs-5 fw-bold text-bg-dark" id="nombreUsuarioDashboard"></div>
+                              <a class="btn btn-primary btn-sm" href="#">Cerrar sesion</a>
                          </div>
                     </nav>
                </div>
@@ -149,7 +132,7 @@
                               </ol>
                               <div class="card mb-4">
                                    <div class="card-body">
-                                        <form>
+                                        <form id="formGuardarVoucher">
                                              <div class="row">
                                                   <div class="mb-3 col-md-4">
                                                        <label
@@ -357,85 +340,16 @@
           <!-- Plantilla del formulario oculto -->
           <!-- Button trigger modal -->
 
-          <!-- Modal -->
-          <div
-               class="modal fade"
-               id="modalCrearProceso"
-               tabindex="-1"
-               aria-labelledby="exampleModalLabel"
-               aria-hidden="true"
-          >
-               <div class="modal-dialog">
-                    <div class="modal-content">
-                         <div class="modal-header">
-                              <h1
-                                   class="modal-title fs-5"
-                                   id="exampleModalLabel"
-                              >
-                                   Proceso
-                              </h1>
-                              <button
-                                   type="button"
-                                   class="btn-close"
-                                   id="btnCloseModalProceso"
-                                   data-bs-dismiss="modal"
-                                   aria-label="Close"
-                              ></button>
-                         </div>
-                         <div class="modal-body">
-                              <form id="formCrearProceso">
-                                   <div class="form-group">
-                                        <label for="nombre">Nombre:</label>
-                                        <input
-                                             type="text"
-                                             class="form-control nombre"
-                                             required
-                                        />
-                                   </div>
-                                   <div class="form-group">
-                                        <label for="estado">Estado:</label>
-                                        <select
-                                             class="form-control estado"
-                                             required
-                                        >
-                                             <option value="activo">
-                                                  Activo
-                                             </option>
-                                             <option value="cerrado">
-                                                  Cerrado
-                                             </option>
-                                        </select>
-                                   </div>
-                                   <div class="form-group">
-                                        <label for="fecha">Fecha:</label>
-                                        <input
-                                             type="date"
-                                             class="form-control fecha"
-                                             required
-                                        />
-                                   </div>
-                              </form>
-                         </div>
-                         <div class="modal-footer">
-                              <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                              <button
-                                   type="button"
-                                   class="btn btn-primary"
-                                   id="btnGuardarNuevoProceso"
-                              >
-                                   Guardar
-                              </button>
-                         </div>
-                    </div>
-               </div>
-          </div>
+          
 
           <script
                src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                crossorigin="anonymous"
           ></script>
           <script src="js/scripts.js"></script>
-
           <script src="dist/bundle.js"></script>
+          <script>
+            nombreUsuarioDashboard.textContent = localStorage.getItem('nombre')
+          </script>
      </body>
 </html>
