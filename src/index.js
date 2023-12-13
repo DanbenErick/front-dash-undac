@@ -18,6 +18,9 @@ import './register.js'
 import './voucher.js'
 import './cerrar-sesion.js'
 
+import { config } from 'dotenv-webpack'
+config()
+
 // import 'datatables.net/css/jquery.dataTables.css';
 // btnCrearProceso.addEventListener('click', abrirModal)
 // Función para mostrar los datos en una tablaa
@@ -77,8 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
      //   setDatosComplementarios(data);
      // });
 
-     if (window.location.pathname.includes('procesos.html')) {
-          axios.get('http://localhost:8000/api/administrador/get-procesos')
+     if (window.location.pathname.includes('procesos.html')) {          
+          axios.get(`${process.env.API_URL}${process.env.API_ADMINISTRADOR}/get-procesos`)
                .then((response) => {
                     console.log(response.data)
                     // Presenta los datos en una tabla
@@ -132,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                }
                // Realizar la petición POST con Axios
                axios.post(
-                    'http://localhost:8000/api/administrador/crear-proceso',
+                    `${process.env.API_URL}${process.env.API_ADMINISTRADOR}/crear-proceso`,
                     data
                )
                     .then((response) => {
