@@ -1,4 +1,5 @@
 const path = require('path')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
      entry: './src/index.js', // Ruta del archivo de entrada
@@ -7,6 +8,7 @@ module.exports = {
           filename: 'bundle.js', // Nombre del archivo de salida
           path: path.resolve(__dirname, 'dist') // Ruta de salida
      },
+     plugins: [new Dotenv()],
      module: {
           rules: [
                {
