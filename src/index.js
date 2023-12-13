@@ -16,6 +16,7 @@ import {
 import './login.js'
 import './register.js'
 import './voucher.js'
+import './cerrar-sesion.js'
 
 // import 'datatables.net/css/jquery.dataTables.css';
 // btnCrearProceso.addEventListener('click', abrirModal)

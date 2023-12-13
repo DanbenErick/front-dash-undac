@@ -104,12 +104,12 @@ const searchEstudianteFromDNI = () => {
 }
 
 const setVoucher = (_) => {
-     if(!validarFormulario('formGuardarVoucher')['ok']) {
-        Toast.fire({
-            icon: 'warning',
-            title: 'Rellena todos los datos requeridos'
-       })
-       return;
+     if (!validarFormulario('formGuardarVoucher')['ok']) {
+          Toast.fire({
+               icon: 'warning',
+               title: 'Rellena todos los datos requeridos'
+          })
+          return
      }
      Swal.fire({
           title: 'Voucher?',

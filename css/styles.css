@@ -1,4 +1,8 @@
 @charset "UTF-8";
+.table-container {
+     max-height: 400px; /* Establece el límite de altura que desees */
+     overflow-y: auto; /* Agrega la barra de desplazamiento vertical si es necesario */
+}
 /*!
 * Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)
 * Copyright 2013-2023 Start Bootstrap

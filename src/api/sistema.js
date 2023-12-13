@@ -9,6 +9,7 @@ export const login = (data) => {
                localStorage.setItem('token', resp.data.token)
                localStorage.setItem('id', resp.data.id)
                localStorage.setItem('nombre', resp.data.name)
+               location.reload()
                containerSpinner.style.display = 'none'
           })
           .catch((err) => {
@@ -22,6 +23,7 @@ export const register = (data) => {
                localStorage.setItem('token', resp.data.token)
                localStorage.setItem('id', resp.data.id)
                localStorage.setItem('nombre', resp.data.name)
+               location.reload()
                containerSpinner.style.display = 'none'
           })
           .catch((err) => {
