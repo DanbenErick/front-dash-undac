@@ -10,9 +10,10 @@ import {
      getEtnicas,
      getProcesos,
      getProgramasEstudio,
-     setDatosComplementarios
+     setDatosComplementarios,
+     guardatCambiosEditadosEstudiante,
+     getDatosEstudiantesModal
 } from './estudiantes.js'
-
 import './login.js'
 import './register.js'
 import './voucher.js'
@@ -20,6 +21,41 @@ import './cerrar-sesion.js'
 import { cerrarSesionEvent } from './cerrar-sesion.js'
 import { API_ADMINISTRADOR, API_ESTUDIANTE, API_SISTEMA, API_URL } from './env.js'
 import { getDataEstudianteFromDNI } from './api/administrador.js'
+
+axios.interceptors.response.use(
+     (response) => {
+       // Si la respuesta es exitosa, simplemente la devolvemos
+       return response;
+     },
+     (error) => {
+       // Si hay un error en la respuesta
+       if (error.response.status === 403) {
+         // Aquí puedes realizar acciones específicas para el código de estado 403
+         Swal.fire({
+          title: "UNDAC?",
+          text: "Su sesion vencio!",
+          icon: "warning",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Listo"
+        }).then((result) => {
+          if (result.isConfirmed) {
+               cerrarSesionEvent()
+               location.reload()
+          }
+        })
+        .catch(err => {
+               cerrarSesionEvent()
+               location.reload()
+        })
+         
+         // Puedes redirigir a una página de error, mostrar un mensaje, etc.
+       }
+       // Devolvemos el error para que sea manejado en la cadena de promesas
+       return Promise.reject(error);
+     }
+   );
+
+
 const tokenLocalStorage = localStorage.getItem('token')
 const axiosConfig = {
      headers: {
@@ -50,6 +86,23 @@ document.addEventListener('DOMContentLoaded', () => {
           getProcesos()
           getSedes()
           getProgramasEstudio()
+          getDatosEstudiantesModal()
+
+
+          btnSearchEstudianteForDNIFormEstudiantes.addEventListener('click', () => {
+               const dni = dniEstudianteFormEstudiante.value
+               searchEstudianteFromDNI(dni)
+          })
+
+          btnRefreshDataModalEstudiantes.addEventListener('click', () => {
+               
+               containerSpinner.style.display = "flex"
+               getDatosEstudiantesModal()
+          })
+
+
+
+
 
           selectDepartamentoEstudiante.addEventListener('change', () => {
                getProvinciaForSelect(selectDepartamentoEstudiante.value)
@@ -67,60 +120,100 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectDistritoEstudiante.value
                )
           })
-     }
 
-     guardarDatosComplementarias.addEventListener("click", () => {
-          const formData = new FormData()
-          formData.append("dniEstudiante", dniEstudianteFormEstudiante.value)
-          formData.append("apellidosNombres", apellidosNombres.value)
-          formData.append("celularApoderado", celularApoderado.value)
-          formData.append("dniApoderado", dniApoderado.value)
-          formData.append("selectModalidad", selectModalidad.value)
-          formData.append("anioConclusion", anioConclusion.value)
-          formData.append("tipoColegio", tipoColegio.value)
-          formData.append("nombreColegio", nombreColegio.value)
-          formData.append("selectSedeExamen", selectSedeExamen.value)
-          formData.append("selectProgramaEstudio", selectProgramaEstudio.value)
-          formData.append("genero", genero.value)
-          formData.append("fechaNacimiento", fechaNacimiento.value)
-          formData.append("inputUbigeo", inputUbigeo.value)
-          formData.append("selectDepartamentoEstudiante", selectDepartamentoEstudiante.value)
-          formData.append("selectProvinciaEstudiante", selectProvinciaEstudiante.value)
-          formData.append("selectDistritoEstudiante", selectDistritoEstudiante.value)
-          formData.append("direccionActual", direccionActual.value)
-          formData.append("discapacidad", discapacidad.value)
-          formData.append("tipoDiscapacidad", tipoDiscapacidad.value)
-          formData.append("identidadEtnica", identidadEtnica.value)
-          formData.append("celular", celular.value)
-          formData.append("telefonoFijo", telefonoFijo.value)
-          formData.append("foto", inputFileFotoFormEstudiante.files[0])
-       const data = {
-         dniEstudiante: dniEstudianteFormEstudiante.value,
-         apellidosNombres: apellidosNombres.value,
-         celularApoderado: celularApoderado.value,
-         dniApoderado: dniApoderado.value,
-         selectModalidad: selectModalidad.value,
-         anioConclusion: anioConclusion.value,
-         tipoColegio: tipoColegio.value,
-         nombreColegio: nombreColegio.value,
-         selectSedeExamen: selectSedeExamen.value,
-         selectProgramaEstudio: selectProgramaEstudio.value,
-         genero: genero.value,
-         fechaNacimiento: fechaNacimiento.value,
-         inputUbigeo: inputUbigeo.value,
-         selectDepartamentoEstudiante: selectDepartamentoEstudiante.value,
-         selectProvinciaEstudiante: selectProvinciaEstudiante.value,
-         selectDistritoEstudiante: selectDistritoEstudiante.value,
-         direccionActual: direccionActual.value,
-         discapacidad: discapacidad.value,
-         tipoDiscapacidad: tipoDiscapacidad.value,
-         identidadEtnica: identidadEtnica.value,
-         celular: celular.value,
-         telefonoFijo: telefonoFijo.value,
-         foto: inputFileFotoFormEstudiante.files[0],
-       };
-       setDatosComplementarios(formData);
-     });
+          btnGuardarCambiosEstudianteModalEditarEstudiante.addEventListener('click', () => {
+               const data = {
+                    dni: inputNumeroDNIModalEditarEstudiante.value,
+                    ap_paterno: apellidoPaternoModalEditarEstudiante.value,
+                    ap_materno: apellidoMaternoModalEditarEstudiante.value,
+                    nombres: nombresModalEditarEstudiante.value,
+                    programa: programaEstudioModalEditarEstudiante.value,
+                    area: areaModalEditarEstudiante.value,
+                    sede: sedeExamenModalEditarEstudiante.value,
+                    preparatoria: preparatoriaModalEditarEstudiante.value,
+               }
+               guardatCambiosEditadosEstudiante(data)
+          })
+
+          btnBuscarDatosEstudianteModalEditarEstudiante.addEventListener('click', () => {
+               const dni = inputNumeroDNIModalEditarEstudiante.value
+               getDataEstudianteFromDNI({ dni }, (resp) => {
+                    if (resp.data.length == 0) {
+                         Toast.fire({
+                              icon: 'error',
+                              title: 'No se encontro estudiante con ese DNI'
+                         })
+                    } else {
+                         const nombre_completo = `${resp.data[0].nombres} ${resp.data[0].apellido_p} ${resp.data[0].apellido_m}`
+                         
+                         apellidoPaternoModalEditarEstudiante. value = resp.data[0].apellido_p
+                         apellidoMaternoModalEditarEstudiante. value = resp.data[0].apellido_m
+                         nombresModalEditarEstudiante. value = resp.data[0].nombres
+                         programaEstudioModalEditarEstudiante. value = resp.data[0].codigo
+                         areaModalEditarEstudiante. value = resp.data[0].area2
+                         sedeExamenModalEditarEstudiante. value = resp.data[0].sede_e
+                         preparatoriaModalEditarEstudiante. value = resp.data[0].preparatoria
+                         Toast.fire({
+                              icon: 'success',
+                              title: 'Se encontro estudiante con ese DNI'
+                         })
+                    }
+                    containerSpinner.style.display = 'none'
+               })
+          })
+          guardarDatosComplementarias.addEventListener("click", () => {
+               const formData = new FormData()
+               formData.append("dniEstudiante", dniEstudianteFormEstudiante.value)
+               formData.append("apellidosNombres", apellidosNombres.value)
+               formData.append("celularApoderado", celularApoderado.value)
+               formData.append("dniApoderado", dniApoderado.value)
+               formData.append("selectModalidad", selectModalidad.value)
+               formData.append("anioConclusion", anioConclusion.value)
+               formData.append("tipoColegio", tipoColegio.value)
+               formData.append("nombreColegio", nombreColegio.value)
+               formData.append("selectSedeExamen", selectSedeExamen.value)
+               formData.append("selectProgramaEstudio", selectProgramaEstudio.value)
+               formData.append("genero", genero.value)
+               formData.append("fechaNacimiento", fechaNacimiento.value)
+               formData.append("inputUbigeo", inputUbigeo.value)
+               formData.append("selectDepartamentoEstudiante", selectDepartamentoEstudiante.value)
+               formData.append("selectProvinciaEstudiante", selectProvinciaEstudiante.value)
+               formData.append("selectDistritoEstudiante", selectDistritoEstudiante.value)
+               formData.append("direccionActual", direccionActual.value)
+               formData.append("discapacidad", discapacidad.value)
+               formData.append("tipoDiscapacidad", tipoDiscapacidad.value)
+               formData.append("identidadEtnica", identidadEtnica.value)
+               formData.append("celular", celular.value)
+               formData.append("telefonoFijo", telefonoFijo.value)
+               formData.append("foto", inputFileFotoFormEstudiante.files[0])
+            const data = {
+              dniEstudiante: dniEstudianteFormEstudiante.value,
+              apellidosNombres: apellidosNombres.value,
+              celularApoderado: celularApoderado.value,
+              dniApoderado: dniApoderado.value,
+              selectModalidad: selectModalidad.value,
+              anioConclusion: anioConclusion.value,
+              tipoColegio: tipoColegio.value,
+              nombreColegio: nombreColegio.value,
+              selectSedeExamen: selectSedeExamen.value,
+              selectProgramaEstudio: selectProgramaEstudio.value,
+              genero: genero.value,
+              fechaNacimiento: fechaNacimiento.value,
+              inputUbigeo: inputUbigeo.value,
+              selectDepartamentoEstudiante: selectDepartamentoEstudiante.value,
+              selectProvinciaEstudiante: selectProvinciaEstudiante.value,
+              selectDistritoEstudiante: selectDistritoEstudiante.value,
+              direccionActual: direccionActual.value,
+              discapacidad: discapacidad.value,
+              tipoDiscapacidad: tipoDiscapacidad.value,
+              identidadEtnica: identidadEtnica.value,
+              celular: celular.value,
+              telefonoFijo: telefonoFijo.value,
+              foto: inputFileFotoFormEstudiante.files[0],
+            };
+            setDatosComplementarios(formData);
+          });    
+     }
 
      if (window.location.pathname.includes('procesos.html')) {          
           axios.get(`${API_URL}${API_ADMINISTRADOR}/get-procesos`, axiosConfig)
@@ -240,10 +333,7 @@ const searchEstudianteFromDNI = (dni) => {
      })
 }
 
-btnSearchEstudianteForDNIFormEstudiantes.addEventListener('click', () => {
-     const dni = dniEstudianteFormEstudiante.value
-     searchEstudianteFromDNI(dni)
-})
+
 
 
 const detenerIntervalo = () => {
@@ -294,6 +384,7 @@ const detenerIntervalo = () => {
      }
    }
    const segundos = 60 * 4;
+//    const segundos = 10;
    
    const milisegundos = segundos * 1000;
    

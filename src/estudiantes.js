@@ -1,20 +1,62 @@
 import axios from 'axios'
 import { API_ADMINISTRADOR, API_ESTUDIANTE, API_SISTEMA, API_URL } from './env.js'
+import Swal from 'sweetalert2';
 const tokenLocalStorage = localStorage.getItem('token')
 const axiosConfig = {
      headers: {
-       'Authorization': `Bearer ${tokenLocalStorage}`,
-       'Content-Type': 'multipart/form-data', // Puedes ajustar el tipo de contenido según tus necesidades
+          'Authorization': `Bearer ${tokenLocalStorage}`
      },
 };
+
+const guardatCambiosEditadosEstudiante = (data, callback) => {
+     axios.post(`${API_URL}${API_ADMINISTRADOR}/editar-datos-postulante`, data, axiosConfig)
+          .then(resp => {
+               if (resp.data.ok) {
+                    Swal.fire({
+                         title: "UNDAC",
+                         text: "Se guardo correctamente los datos",
+                         icon: 'success'
+                    })
+                    formModalEditarEstudiante.reset()
+               }
+          })
+          .error(err => {
+               Swal.fire({
+                    title: "UNDAC",
+                    text: "Ocurrio un error",
+                    icon: 'error'
+               })
+               console.error(err)
+          })
+}
 const setDatosComplementarios = (data) => {
      axios.post(
           `${API_URL}${API_ADMINISTRADOR}/registrar-datos-postulante`,
           data,
-          axiosConfig
+          {
+               headers: {
+                    'Authorization': `Bearer ${tokenLocalStorage}`,
+                    'Content-Type': 'multipart/form-data', // Puedes ajustar el tipo de contenido según tus necesidades
+               },
+          }
      )
-          .then((resp) => {})
-          .catch((err) => {})
+          .then((resp) => {
+               if (resp.data.ok) {
+                    Swal.fire({
+                         title: "UNDAC",
+                         text: "Se guardo correctamente los datos",
+                         icon: 'success'
+                    })
+               }
+          })
+          .catch((err) => {
+               Swal.fire({
+                    title: "UNDAC",
+                    text: "Ocurrio un error",
+                    icon: 'error'
+               })
+               console.error(err)
+          })
 }
 
 const getSedes = () => {
@@ -28,9 +70,65 @@ const getSedes = () => {
                var option = document.createElement('option')
                option.value = data.sede
                option.text = data.sede
+               sedeExamenModalEditarEstudiante.add(option)
+          })
+          resp.data.forEach(function (data) {
+               var option = document.createElement('option')
+               option.value = data.sede
+               option.text = data.sede
                selectSedeExamen.add(option)
+               
           })
      })
+}
+
+const getDatosEstudiantesModal = () => {
+     const table = document.querySelector('#tableModalTodosEstudiantes tbody')
+     table.innerHTML = ""
+     axios.get(`${API_URL}${API_ADMINISTRADOR}/get-estudiantes-incritos-examen`, axiosConfig)
+     .then(response => {
+          
+     
+          for (const item of response.data) {
+               const row = document.createElement('tr')
+     
+               const idCell = document.createElement('td')
+               const idText = document.createTextNode(item.dni)
+               idCell.appendChild(idText)
+               row.appendChild(idCell)
+     
+               const nombreCell = document.createElement('td')
+               const nombreText = document.createTextNode(`${item.apellido_p} ${item.apellido_m} ${item.nombres}` )
+               nombreCell.appendChild(nombreText)
+               row.appendChild(nombreCell)
+     
+               // Repite el proceso para estado y fecha
+               const estadoCell = document.createElement('td')
+               const estadoText = document.createTextNode(item.modalidad)
+               estadoCell.appendChild(estadoText)
+               row.appendChild(estadoCell)
+     
+               const fechaCell = document.createElement('td')
+               const fechaText = document.createTextNode(item.area2)
+               fechaCell.appendChild(fechaText)
+               row.appendChild(fechaCell)
+
+               const sedeCell = document.createElement('td')
+               const sedeText = document.createTextNode(item.sede_e)
+               sedeCell.appendChild(sedeText)
+               row.appendChild(sedeCell)
+     
+               // Repite el proceso para estado y fecha
+     
+               table.appendChild(row)
+          }
+          containerSpinner.style.display = "none"
+     })
+     .catch(err => {
+          console.log(err)
+          containerSpinner.style.display = "none"
+     })
+     
 }
 
 const getProgramasEstudio = () => {
@@ -40,6 +138,12 @@ const getProgramasEstudio = () => {
      ).then((resp) => {
           console.log(resp.data)
 
+          resp.data.forEach(function (data) {
+               var option = document.createElement('option')
+               option.value = data.id
+               option.text = data.nombre
+               programaEstudioModalEditarEstudiante.add(option)
+          })
           resp.data.forEach(function (data) {
                var option = document.createElement('option')
                option.value = data.id
@@ -169,5 +273,7 @@ export {
      getEtnicas,
      getProcesos,
      getSedes,
-     setDatosComplementarios
+     setDatosComplementarios,
+     guardatCambiosEditadosEstudiante,
+     getDatosEstudiantesModal
 }

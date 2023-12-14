@@ -1,63 +1,41 @@
 <!doctype html>
 <html lang="en">
-     <head>
-          <meta charset="utf-8" />
-          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-          <meta
-               name="viewport"
-               content="width=device-width, initial-scale=1, shrink-to-fit=no"
-          />
-          <meta name="description" content="" />
-          <meta name="author" content="" />
-          <title>Voucher - UNDAC</title>
-          <script src="js/verificar.js"></script>
-          <link href="css/styles.css" rel="stylesheet" />
-          <script
-               src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
-               crossorigin="anonymous"
-          ></script>
-          <link rel="stylesheet" href="css/theme-bootstrap.min.css" />
-          <link rel="stylesheet" href="css/spinner.css" />
-     </head>
-     <body class="sb-nav-fixed">
-          <div
-               class="container-spinner"
-               id="containerSpinner"
-               style="display: none"
-          >
-               <span class="loader"></span>
-          </div>
-          <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-               <!-- Navbar Brand-->
-               <a class="navbar-brand ps-3" href="index.html">ADMIN UNDAC</a>
-               <!-- Sidebar Toggle-->
-               <button
-                    class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-                    id="sidebarToggle"
-                    href="#!"
-               >
-                    <i class="fas fa-bars"></i>
-               </button>
-               <!-- Navbar Search-->
 
-               <!-- Navbar-->
-               <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                    <li class="nav-item dropdown">
-                         <a
-                              class="nav-link dropdown-toggle"
-                              id="navbarDropdown"
-                              href="#"
-                              role="button"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                              ><i class="fas fa-user fa-fw"></i
-                         ></a>
-                         <ul
-                              class="dropdown-menu dropdown-menu-end"
-                              aria-labelledby="navbarDropdown"
-                         >
-                              <!-- <li><a class="dropdown-item" id="nombreUsuarioDashboard" style="font-weight: bold;"></a></li> -->
-                              <!-- <li>
+<head>
+     <meta charset="utf-8" />
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+     <meta name="description" content="" />
+     <meta name="author" content="" />
+     <title>Voucher - UNDAC</title>
+     <script src="js/verificar.js"></script>
+     <link href="css/styles.css" rel="stylesheet" />
+     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="css/theme-bootstrap.min.css" />
+     <link rel="stylesheet" href="css/spinner.css" />
+</head>
+
+<body class="sb-nav-fixed">
+     <div class="container-spinner" id="containerSpinner" style="display: none">
+          <span class="loader"></span>
+     </div>
+     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+          <!-- Navbar Brand-->
+          <a class="navbar-brand ps-3" href="index.html">ADMIN UNDAC</a>
+          <!-- Sidebar Toggle-->
+          <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+               <i class="fas fa-bars"></i>
+          </button>
+          <!-- Navbar Search-->
+
+          <!-- Navbar-->
+          <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+               <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                         data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                         <!-- <li><a class="dropdown-item" id="nombreUsuarioDashboard" style="font-weight: bold;"></a></li> -->
+                         <!-- <li>
                                    <a class="dropdown-item" href="#!"
                                         >Settings</a
                                    >
@@ -67,298 +45,208 @@
                                         >Activity Log</a
                                    >
                               </li> -->
-                              <li><hr class="dropdown-divider" /></li>
-                              <li>
-                                   <a class="dropdown-item" href="#!"
-                                        >Cerrar sesion</a
-                                   >
-                              </li>
-                         </ul>
-                    </li>
-               </ul>
-          </nav>
+                         <li>
+                              <hr class="dropdown-divider" />
+                         </li>
+                         <li>
+                              <a class="dropdown-item" href="#!">Cerrar sesion</a>
+                         </li>
+                    </ul>
+               </li>
+          </ul>
+     </nav>
 
-          <div id="layoutSidenav">
-               <!-- Sidebar -->
-               <div id="layoutSidenav_nav">
-                    <nav
-                         class="sb-sidenav accordion sb-sidenav-dark"
-                         id="sidenavAccordion"
-                    >
-                         <div class="sb-sidenav-menu">
-                              <div class="nav">
-                                   <a class="nav-link" href="procesos.html">
-                                        <div class="sb-nav-link-icon">
-                                             <i class="fas fa-table"></i>
-                                        </div>
-                                        Procesos
-                                   </a>
-                                   <a class="nav-link" href="voucher.html">
-                                        <div class="sb-nav-link-icon">
-                                             <i class="fas fa-table"></i>
-                                        </div>
-                                        Voucher
-                                   </a>
-                                   <a class="nav-link" href="estudiantes.html">
-                                        <div class="sb-nav-link-icon">
-                                             <i class="fas fa-table"></i>
-                                        </div>
-                                        Estudiantes
-                                   </a>
-                              </div>
-                         </div>
-                         <div
-                              class="sb-sidenav-footer d-flex flex-column justify-content-center align-items-center"
-                         >
-                              <div
-                                   class="fs-5 fw-bold text-bg-dark"
-                                   id="nombreUsuarioDashboard"
-                              ></div>
-                              <button
-                                   class="btn btn-primary btn-sm"
-                                   id="btnCerrarSesion"
-                              >
-                                   Cerrar sesion
-                              </button>
-                         </div>
-                    </nav>
-               </div>
-
-               <div id="layoutSidenav_content">
-                    <main>
-                         <div class="container-fluid px-4">
-                              <h1 class="mt-4">Voucher</h1>
-                              <ol class="breadcrumb mb-4">
-                                   <li class="breadcrumb-item">
-                                        <a href="index.html">Dashboard</a>
-                                   </li>
-                                   <li class="breadcrumb-item active">
-                                        Voucher
-                                   </li>
-                              </ol>
-                              <div class="card mb-4">
-                                   <div class="card-body">
-                                        <form id="formGuardarVoucher">
-                                             <div class="row">
-                                                  <div class="mb-3 col-md-4">
-                                                       <label
-                                                            for="tipoVoucher"
-                                                            class="form-label"
-                                                            >Tipo de
-                                                            Voucher</label
-                                                       >
-                                                       <select
-                                                            class="form-select"
-                                                            id="selectTipoVoucherFormVoucher"
-                                                            name="tipoVoucher"
-                                                            required
-                                                       >
-                                                            <option
-                                                                 value=""
-                                                                 disabled
-                                                                 selected
-                                                            >
-                                                                 Seleccione el
-                                                                 tipo
-                                                            </option>
-                                                       </select>
-                                                  </div>
-                                                  <div class="mb-3 col-md-4">
-                                                       <label
-                                                            for="fecha"
-                                                            class="form-label"
-                                                            >Fecha</label
-                                                       >
-                                                       <input
-                                                            type="date"
-                                                            class="form-control"
-                                                            id="inputFechaFormVoucher"
-                                                            required
-                                                       />
-                                                  </div>
-                                                  <div class="mb-3 col-md-4">
-                                                       <label
-                                                            for="fecha"
-                                                            class="form-label"
-                                                            >Nombre
-                                                            completo</label
-                                                       >
-                                                       <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            id="inputNombreCompletoFormVoucher"
-                                                            required
-                                                            disabled="true"
-                                                       />
-                                                  </div>
-                                             </div>
-                                             <div class="row">
-                                                  <div class="mb-3 col-md-4">
-                                                       <label
-                                                            for="dni"
-                                                            class="form-label"
-                                                            >DNI</label
-                                                       >
-                                                       <div class="input-group">
-                                                            <input
-                                                                 type="text"
-                                                                 id="inputDNIFormVoucher"
-                                                                 pattern="\d{8}"
-                                                                 class="form-control"
-                                                                 placeholder="Numero"
-                                                                 aria-label="Recipient's username"
-                                                                 aria-describedby="btnBuscarEstudianteFromDNI"
-                                                                 required
-                                                            />
-                                                            <button
-                                                                 class="btn btn-outline-secondary"
-                                                                 type="button"
-                                                                 id="btnBuscarEstudianteFromDNI"
-                                                            >
-                                                                 <i
-                                                                      class="fas fa-search"
-                                                                 ></i>
-                                                            </button>
-                                                       </div>
-                                                  </div>
-
-                                                  <div class="mb-3 col-md-4">
-                                                       <label
-                                                            for="monto"
-                                                            class="form-label"
-                                                            >Monto</label
-                                                       >
-                                                       <input
-                                                            type="number"
-                                                            class="form-control"
-                                                            id="inputMontoFormVoucher"
-                                                            step="0.01"
-                                                            placeholder="Ingrese el monto"
-                                                            required
-                                                       />
-                                                  </div>
-
-                                                  <div class="mb-3 col-md-4">
-                                                       <label
-                                                            for="codigoVoucher"
-                                                            class="form-label"
-                                                            >Código de
-                                                            Voucher</label
-                                                       >
-                                                       <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            id="inputCodigoFormVoucher"
-                                                            placeholder="Ingrese el código de voucher"
-                                                            required
-                                                       />
-                                                  </div>
-                                             </div>
-                                             <button
-                                                  type="button"
-                                                  class="btn btn-primary"
-                                                  id="btnGuadarVoucherFormVoucher"
-                                             >
-                                                  <i class="fas fa-save"></i> -
-                                                  Guardar Voucher
-                                             </button>
-                                        </form>
+     <div id="layoutSidenav">
+          <!-- Sidebar -->
+          <div id="layoutSidenav_nav">
+               <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                         <div class="nav">
+                              <a class="nav-link" href="procesos.html">
+                                   <div class="sb-nav-link-icon">
+                                        <i class="fas fa-table"></i>
                                    </div>
-                              </div>
+                                   Procesos
+                              </a>
+                              <a class="nav-link" href="voucher.html">
+                                   <div class="sb-nav-link-icon">
+                                        <i class="fas fa-table"></i>
+                                   </div>
+                                   Voucher
+                              </a>
+                              <a class="nav-link" href="estudiantes.html">
+                                   <div class="sb-nav-link-icon">
+                                        <i class="fas fa-table"></i>
+                                   </div>
+                                   Estudiantes
+                              </a>
+                         </div>
+                    </div>
+                    <div class="sb-sidenav-footer d-flex flex-column justify-content-center align-items-center">
+                         <div class="fs-5 fw-bold text-bg-dark" id="nombreUsuarioDashboard"></div>
+                         <button class="btn btn-primary btn-sm" id="btnCerrarSesion">
+                              Cerrar sesion
+                         </button>
+                    </div>
+               </nav>
+          </div>
 
-                              <div class="card mb-4">
-                                   <div
-                                        class="card-header"
-                                        style="
+          <div id="layoutSidenav_content">
+               <main>
+                    <div class="container-fluid px-4">
+                         <h1 class="mt-4">Voucher</h1>
+                         <ol class="breadcrumb mb-4">
+                              <li class="breadcrumb-item">
+                                   <a href="index.html">Dashboard</a>
+                              </li>
+                              <li class="breadcrumb-item active">
+                                   Voucher
+                              </li>
+                         </ol>
+                         <div class="card mb-4">
+                              <div class="card-body">
+                                   <form id="formGuardarVoucher">
+                                        <div class="row">
+                                             <div class="mb-3 col-md-4">
+                                                  <label for="tipoVoucher" class="form-label">Tipo de
+                                                       Voucher</label>
+                                                  <select class="form-select" id="selectTipoVoucherFormVoucher"
+                                                       name="tipoVoucher" required>
+                                                       <option value="" disabled selected>
+                                                            Seleccione el
+                                                            tipo
+                                                       </option>
+                                                  </select>
+                                             </div>
+                                             <div class="mb-3 col-md-4">
+                                                  <label for="fecha" class="form-label">Fecha</label>
+                                                  <input type="date" class="form-control" id="inputFechaFormVoucher"
+                                                       required />
+                                             </div>
+                                             <div class="mb-3 col-md-4">
+                                                  <label for="fecha" class="form-label">Nombre
+                                                       completo</label>
+                                                  <input type="text" class="form-control"
+                                                       id="inputNombreCompletoFormVoucher" required disabled="true" />
+                                             </div>
+                                        </div>
+                                        <div class="row">
+                                             <div class="mb-3 col-md-4">
+                                                  <label for="dni" class="form-label">DNI</label>
+                                                  <div class="input-group">
+                                                       <input type="text" id="inputDNIFormVoucher" pattern="\d{8}"
+                                                            class="form-control" placeholder="Numero"
+                                                            aria-label="Recipient's username"
+                                                            aria-describedby="btnBuscarEstudianteFromDNI" required />
+                                                       <button class="btn btn-outline-secondary" type="button"
+                                                            id="btnBuscarEstudianteFromDNI">
+                                                            <i class="fas fa-search"></i>
+                                                       </button>
+                                                  </div>
+                                             </div>
+
+                                             <div class="mb-3 col-md-4">
+                                                  <label for="monto" class="form-label">Monto</label>
+                                                  <input type="number" class="form-control" id="inputMontoFormVoucher"
+                                                       step="0.01" placeholder="Ingrese el monto" required />
+                                             </div>
+
+                                             <div class="mb-3 col-md-4">
+                                                  <label for="codigoVoucher" class="form-label">Código de
+                                                       Voucher</label>
+                                                  <input type="text" class="form-control" id="inputCodigoFormVoucher"
+                                                       placeholder="Ingrese el código de voucher" required />
+                                             </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" id="btnGuadarVoucherFormVoucher">
+                                             <i class="fas fa-save"></i> -
+                                             Guardar Voucher
+                                        </button>
+                                   </form>
+                              </div>
+                         </div>
+
+                         <div class="card mb-4">
+                              <div class="card-header" style="
                                              display: flex;
                                              justify-content: space-between;
                                              align-items: center;
-                                        "
-                                   >
-                                        <div class="title-card-header">
-                                             <i class="fas fa-table me-1"></i>
-                                             Lista de vouchers
-                                        </div>
+                                        ">
+                                   <div class="title-card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        Lista de vouchers
+                                   </div>
 
-                                        <button
-                                             class="btn btn-primary btn-sm"
-                                             id="btnRefreshTableVoucher"
-                                        >
-                                             <i class="fas fa-refresh me-1"></i>
-                                        </button>
-                                   </div>
-                                   <div class="card-body">
-                                        <div
-                                             class="table-responsive table-container"
-                                        >
-                                             <table
-                                                  class="table table-striped table-hover"
-                                             >
-                                                  <thead>
-                                                       <tr>
-                                                            <th scope="col">
-                                                                 ID
-                                                            </th>
-                                                            <th scope="col">
-                                                                 Codigo
-                                                            </th>
-                                                            <th scope="col">
-                                                                 DNI
-                                                            </th>
-                                                            <th scope="col">
-                                                                 Fecha
-                                                            </th>
-                                                            <th scope="col">
-                                                                 Nombre
-                                                            </th>
-                                                            <th scope="col">
-                                                                 Proceso
-                                                            </th>
-                                                            <th scope="col">
-                                                                 Monto
-                                                            </th>
-                                                       </tr>
-                                                  </thead>
-                                                  <tbody></tbody>
-                                             </table>
-                                        </div>
+                                   <button class="btn btn-primary btn-sm" id="btnRefreshTableVoucher">
+                                        <i class="fas fa-refresh me-1"></i>
+                                   </button>
+                              </div>
+                              <div class="card-body">
+                                   <div class="table-responsive table-container">
+                                        <table class="table table-striped table-hover">
+                                             <thead>
+                                                  <tr>
+                                                       <th scope="col">
+                                                            ID
+                                                       </th>
+                                                       <th scope="col">
+                                                            Codigo
+                                                       </th>
+                                                       <th scope="col">
+                                                            DNI
+                                                       </th>
+                                                       <th scope="col">
+                                                            Fecha
+                                                       </th>
+                                                       <th scope="col">
+                                                            Nombre
+                                                       </th>
+                                                       <th scope="col">
+                                                            Proceso
+                                                       </th>
+                                                       <th scope="col">
+                                                            Monto
+                                                       </th>
+                                                  </tr>
+                                             </thead>
+                                             <tbody></tbody>
+                                        </table>
                                    </div>
                               </div>
                          </div>
-                    </main>
-                    <footer class="py-4 bg-light mt-auto">
-                         <div class="container-fluid px-4">
-                              <div
-                                   class="d-flex align-items-center justify-content-between small"
-                              >
-                                   <div class="text-muted">
-                                        Copyright &copy; Your Website 2023
-                                   </div>
-                                   <div>
-                                        <a href="#">Privacy Policy</a>
-                                        &middot;
-                                        <a href="#">Terms &amp; Conditions</a>
-                                   </div>
+                    </div>
+               </main>
+               <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                         <div class="d-flex align-items-center justify-content-between small">
+                              <div class="text-muted">
+                                   Copyright &copy; Your Website 2023
+                              </div>
+                              <div>
+                                   <a href="#">Privacy Policy</a>
+                                   &middot;
+                                   <a href="#">Terms &amp; Conditions</a>
                               </div>
                          </div>
-                    </footer>
-               </div>
+                    </div>
+               </footer>
           </div>
+     </div>
 
-          <!-- Plantilla del formulario oculto -->
-          <!-- Button trigger modal -->
+     <!-- Plantilla del formulario oculto -->
+     <!-- Button trigger modal -->
 
-          <script
-               src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-               crossorigin="anonymous"
-          ></script>
-          <script src="js/scripts.js"></script>
-          <script src="dist/bundle.js"></script>
-          <script>
-               nombreUsuarioDashboard.textContent =
-                    localStorage.getItem('nombre')
-          </script>
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/themes@5.0.15/material-ui/material-ui.min.css">
-          
-     </body>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+     </script>
+     <script src="js/scripts.js"></script>
+     <script src="dist/bundle.js"></script>
+     <script>
+          nombreUsuarioDashboard.textContent =
+               localStorage.getItem('nombre')
+     </script>
+     <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@sweetalert2/themes@5.0.15/material-ui/material-ui.min.css">
+
+</body>
+
 </html>
