@@ -4,7 +4,7 @@ const tokenLocalStorage = localStorage.getItem('token')
 const axiosConfig = {
      headers: {
        'Authorization': `Bearer ${tokenLocalStorage}`,
-       'Content-Type': 'application/json', // Puedes ajustar el tipo de contenido según tus necesidades
+       'Content-Type': 'multipart/form-data', // Puedes ajustar el tipo de contenido según tus necesidades
      },
 };
 const setDatosComplementarios = (data) => {

@@ -70,6 +70,30 @@ document.addEventListener('DOMContentLoaded', () => {
      }
 
      guardarDatosComplementarias.addEventListener("click", () => {
+          const formData = new FormData()
+          formData.append("dniEstudiante", dniEstudianteFormEstudiante.value)
+          formData.append("apellidosNombres", apellidosNombres.value)
+          formData.append("celularApoderado", celularApoderado.value)
+          formData.append("dniApoderado", dniApoderado.value)
+          formData.append("selectModalidad", selectModalidad.value)
+          formData.append("anioConclusion", anioConclusion.value)
+          formData.append("tipoColegio", tipoColegio.value)
+          formData.append("nombreColegio", nombreColegio.value)
+          formData.append("selectSedeExamen", selectSedeExamen.value)
+          formData.append("selectProgramaEstudio", selectProgramaEstudio.value)
+          formData.append("genero", genero.value)
+          formData.append("fechaNacimiento", fechaNacimiento.value)
+          formData.append("inputUbigeo", inputUbigeo.value)
+          formData.append("selectDepartamentoEstudiante", selectDepartamentoEstudiante.value)
+          formData.append("selectProvinciaEstudiante", selectProvinciaEstudiante.value)
+          formData.append("selectDistritoEstudiante", selectDistritoEstudiante.value)
+          formData.append("direccionActual", direccionActual.value)
+          formData.append("discapacidad", discapacidad.value)
+          formData.append("tipoDiscapacidad", tipoDiscapacidad.value)
+          formData.append("identidadEtnica", identidadEtnica.value)
+          formData.append("celular", celular.value)
+          formData.append("telefonoFijo", telefonoFijo.value)
+          formData.append("foto", inputFileFotoFormEstudiante.files[0])
        const data = {
          dniEstudiante: dniEstudianteFormEstudiante.value,
          apellidosNombres: apellidosNombres.value,
@@ -93,9 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
          identidadEtnica: identidadEtnica.value,
          celular: celular.value,
          telefonoFijo: telefonoFijo.value,
-         foto: foto.value,
+         foto: inputFileFotoFormEstudiante.files[0],
        };
-       setDatosComplementarios(data);
+       setDatosComplementarios(formData);
      });
 
      if (window.location.pathname.includes('procesos.html')) {          
