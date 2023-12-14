@@ -102,9 +102,7 @@
                                    class="fs-5 fw-bold text-bg-dark"
                                    id="nombreUsuarioDashboard"
                               ></div>
-                              <a class="btn btn-primary btn-sm" href="#"
-                                   >Cerrar sesion</a
-                              >
+                              <button class="btn btn-primary btn-sm" id="btnCerrarSesion">Cerrar sesion</button>
                          </div>
                     </nav>
                </div>
@@ -272,8 +270,7 @@
           <script src="js/scripts.js"></script>
           <script src="dist/bundle.js"></script>
           <script>
-               nombreUsuarioDashboard.textContent =
-                    localStorage.getItem('nombre')
+               nombreUsuarioDashboard.textContent = localStorage.getItem('nombre')
           </script>
      </body>
 </html>

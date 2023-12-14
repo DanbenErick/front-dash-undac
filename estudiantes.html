@@ -17,8 +17,16 @@
                crossorigin="anonymous"
           ></script>
           <link rel="stylesheet" href="css/theme-bootstrap.min.css" />
+          <link rel="stylesheet" href="css/spinner.css">
      </head>
      <body class="sb-nav-fixed">
+          <div
+               class="container-spinner"
+               id="containerSpinner"
+               style="display: none"
+          >
+               <span class="loader"></span>
+          </div>
           <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
                <!-- Navbar Brand-->
                <a class="navbar-brand ps-3" href="index.html">ADMIN UNDAC</a>
@@ -122,9 +130,12 @@
                                    class="fs-5 fw-bold text-bg-dark"
                                    id="nombreUsuarioDashboard"
                               ></div>
-                              <a class="btn btn-primary btn-sm" href="#"
-                                   >Cerrar sesion</a
+                              <button
+                                   class="btn btn-primary btn-sm"
+                                   id="btnCerrarSesion"
                               >
+                                   Cerrar sesion
+                              </button>
                          </div>
                     </nav>
                </div>
@@ -161,6 +172,21 @@
                                    </div>
                                    <div class="card-body">
                                         <form>
+                                             <h4>Estudiante</h4>
+                                             <div class="row">
+                                                  <div class="col-md-6 mb-3">
+                                                       <label for="apellidosNombres" class="form-label">DNI</label>
+                                                       <div class="input-group">
+                                                            <input type="number" class="form-control" id="dniEstudianteFormEstudiante" />
+                                                            <button class="btn btn-primary" id="btnSearchEstudianteForDNIFormEstudiantes" type="button"><i class="fas fa-search"></i></button>
+                                                       </div>
+
+                                                  </div>
+                                                  <div class="col-md-6 mb-3">
+                                                       <label for="celularApoderado" class="form-label">Nombre del estudiante</label>
+                                                       <input type="tel" class="form-control" id="nombreEstudianteFormEstudiante" disabled/>
+                                                  </div>
+                                             </div>
                                              <h4>Datos adicionales</h4>
                                              <div class="row">
                                                   <div class="col-md-4 mb-3">
@@ -602,7 +628,10 @@
                crossorigin="anonymous"
           ></script>
           <script src="js/scripts.js"></script>
-
           <script src="dist/bundle.js"></script>
+          <script>
+               nombreUsuarioDashboard.textContent =
+                    localStorage.getItem('nombre')
+          </script>
      </body>
 </html>

@@ -1,10 +1,17 @@
 import axios from 'axios'
-import { config } from 'dotenv-webpack'
-config()
+import { API_ADMINISTRADOR, API_ESTUDIANTE, API_SISTEMA, API_URL } from './env.js'
+const tokenLocalStorage = localStorage.getItem('token')
+const axiosConfig = {
+     headers: {
+       'Authorization': `Bearer ${tokenLocalStorage}`,
+       'Content-Type': 'application/json', // Puedes ajustar el tipo de contenido según tus necesidades
+     },
+};
 const setDatosComplementarios = (data) => {
      axios.post(
-          `${process.env.API_URL}${process.env.API_ADMINISTRADOR}/registrar-datos-postulante`,
-          data
+          `${API_URL}${API_ADMINISTRADOR}/registrar-datos-postulante`,
+          data,
+          axiosConfig
      )
           .then((resp) => {})
           .catch((err) => {})
@@ -12,7 +19,8 @@ const setDatosComplementarios = (data) => {
 
 const getSedes = () => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ESTUDIANTE}/get-sedes`
+          `${API_URL}${API_ESTUDIANTE}/get-sedes`,
+          axiosConfig
      ).then((resp) => {
           console.log(resp.data)
 
@@ -27,13 +35,14 @@ const getSedes = () => {
 
 const getProgramasEstudio = () => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ESTUDIANTE}/get-programas-estudio`
+          `${API_URL}${API_ESTUDIANTE}/get-programas-estudio`,
+          axiosConfig
      ).then((resp) => {
           console.log(resp.data)
 
           resp.data.forEach(function (data) {
                var option = document.createElement('option')
-               option.value = data.nombre
+               option.value = data.id
                option.text = data.nombre
                selectProgramaEstudio.add(option)
           })
@@ -41,7 +50,8 @@ const getProgramasEstudio = () => {
 }
 const getProcesos = () => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ADMINISTRADOR}/get-procesos`
+          `${API_URL}${API_ADMINISTRADOR}/get-procesos`,
+          axiosConfig
      ).then((resp) => {
           console.log(resp.data)
           const procesosAbiertos = resp.data.filter(
@@ -59,7 +69,8 @@ const getProcesos = () => {
 
 const getDiscapacidades = () => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ESTUDIANTE}/get-discapacidades`
+          `${API_URL}${API_ESTUDIANTE}/get-discapacidades`,
+          axiosConfig
      )
           .then((resp) => {
                console.log(resp.data)
@@ -77,7 +88,8 @@ const getDiscapacidades = () => {
 
 const getEtnicas = () => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ESTUDIANTE}/get-etnicas`
+          `${API_URL}${API_ESTUDIANTE}/get-etnicas`,
+          axiosConfig
      )
           .then((resp) => {
                console.log(resp.data)
@@ -95,7 +107,8 @@ const getEtnicas = () => {
 
 const getDepartamentosForSelect = () => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ESTUDIANTE}/get-departamentos`
+          `${API_URL}${API_ESTUDIANTE}/get-departamentos`,
+          axiosConfig
      )
           .then((resp) => {
                console.log(resp.data)
@@ -112,7 +125,8 @@ const getDepartamentosForSelect = () => {
 }
 const getProvinciaForSelect = (departamento) => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ESTUDIANTE}/get-provincias?departamento=${departamento}`
+          `${API_URL}${API_ESTUDIANTE}/get-provincias?departamento=${departamento}`,
+          axiosConfig
      ).then((resp) => {
           // Llenar las opciones dinámicamente
           resp.data.forEach(function (data) {
@@ -125,7 +139,8 @@ const getProvinciaForSelect = (departamento) => {
 }
 const getDistritoForSelect = (departamento, provincia) => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ESTUDIANTE}/get-distritos?departamento=${departamento}&provincia=${provincia}`
+          `${API_URL}${API_ESTUDIANTE}/get-distritos?departamento=${departamento}&provincia=${provincia}`,
+          axiosConfig
      ).then((resp) => {
           resp.data.forEach(function (data) {
                var option = document.createElement('option')
@@ -138,7 +153,8 @@ const getDistritoForSelect = (departamento, provincia) => {
 
 const getUbigeo = (departamento, provincia, distrito) => {
      axios.get(
-          `${process.env.API_URL}${process.env.API_ESTUDIANTE}/get-ubigeo?departamento=${departamento}&provincia=${provincia}&distrito=${distrito}`
+          `${API_URL}${API_ESTUDIANTE}/get-ubigeo?departamento=${departamento}&provincia=${provincia}&distrito=${distrito}`,
+          axiosConfig
      ).then((resp) => {
           inputUbigeo.value = resp.data[0].ubigeo
      })

@@ -17,10 +17,27 @@ import './login.js'
 import './register.js'
 import './voucher.js'
 import './cerrar-sesion.js'
-
-import { config } from 'dotenv-webpack'
-config()
-
+import { cerrarSesionEvent } from './cerrar-sesion.js'
+import { API_ADMINISTRADOR, API_ESTUDIANTE, API_SISTEMA, API_URL } from './env.js'
+import { getDataEstudianteFromDNI } from './api/administrador.js'
+const tokenLocalStorage = localStorage.getItem('token')
+const axiosConfig = {
+     headers: {
+       'Authorization': `Bearer ${tokenLocalStorage}`,
+       'Content-Type': 'application/json', // Puedes ajustar el tipo de contenido según tus necesidades
+     },
+};
+const Toast = Swal.mixin({
+     toast: true,
+     position: 'top-end',
+     showConfirmButton: false,
+     timer: 6000,
+     timerProgressBar: true,
+     didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer
+          toast.onmouseleave = Swal.resumeTimer
+     }
+})
 // import 'datatables.net/css/jquery.dataTables.css';
 // btnCrearProceso.addEventListener('click', abrirModal)
 // Función para mostrar los datos en una tablaa
@@ -52,36 +69,37 @@ document.addEventListener('DOMContentLoaded', () => {
           })
      }
 
-     // guardarDatosComplementarias.addEventListener("click", () => {
-     //   const data = {
-     //     apellidosNombres: apellidosNombres.value,
-     //     celularApoderado: celularApoderado.value,
-     //     dniApoderado: dniApoderado.value,
-     //     selectModalidad: selectModalidad.value,
-     //     anioConclusion: anioConclusion.value,
-     //     tipoColegio: tipoColegio.value,
-     //     nombreColegio: nombreColegio.value,
-     //     selectSedeExamen: selectSedeExamen.value,
-     //     selectProgramaEstudio: selectProgramaEstudio.value,
-     //     genero: genero.value,
-     //     fechaNacimiento: fechaNacimiento.value,
-     //     inputUbigeo: inputUbigeo.value,
-     //     selectDepartamentoEstudiante: selectDepartamentoEstudiante.value,
-     //     selectProvinciaEstudiante: selectProvinciaEstudiante.value,
-     //     selectDistritoEstudiante: selectDistritoEstudiante.value,
-     //     direccionActual: direccionActual.value,
-     //     discapacidad: discapacidad.value,
-     //     tipoDiscapacidad: tipoDiscapacidad.value,
-     //     identidadEtnica: identidadEtnica.value,
-     //     celular: celular.value,
-     //     telefonoFijo: telefonoFijo.value,
-     //     foto: foto.value,
-     //   };
-     //   setDatosComplementarios(data);
-     // });
+     guardarDatosComplementarias.addEventListener("click", () => {
+       const data = {
+         dniEstudiante: dniEstudianteFormEstudiante.value,
+         apellidosNombres: apellidosNombres.value,
+         celularApoderado: celularApoderado.value,
+         dniApoderado: dniApoderado.value,
+         selectModalidad: selectModalidad.value,
+         anioConclusion: anioConclusion.value,
+         tipoColegio: tipoColegio.value,
+         nombreColegio: nombreColegio.value,
+         selectSedeExamen: selectSedeExamen.value,
+         selectProgramaEstudio: selectProgramaEstudio.value,
+         genero: genero.value,
+         fechaNacimiento: fechaNacimiento.value,
+         inputUbigeo: inputUbigeo.value,
+         selectDepartamentoEstudiante: selectDepartamentoEstudiante.value,
+         selectProvinciaEstudiante: selectProvinciaEstudiante.value,
+         selectDistritoEstudiante: selectDistritoEstudiante.value,
+         direccionActual: direccionActual.value,
+         discapacidad: discapacidad.value,
+         tipoDiscapacidad: tipoDiscapacidad.value,
+         identidadEtnica: identidadEtnica.value,
+         celular: celular.value,
+         telefonoFijo: telefonoFijo.value,
+         foto: foto.value,
+       };
+       setDatosComplementarios(data);
+     });
 
      if (window.location.pathname.includes('procesos.html')) {          
-          axios.get(`${process.env.API_URL}${process.env.API_ADMINISTRADOR}/get-procesos`)
+          axios.get(`${API_URL}${API_ADMINISTRADOR}/get-procesos`, axiosConfig)
                .then((response) => {
                     console.log(response.data)
                     // Presenta los datos en una tabla
@@ -121,44 +139,143 @@ document.addEventListener('DOMContentLoaded', () => {
                })
 
           btnGuardarNuevoProceso.addEventListener('click', () => {
-               const nombre = document.querySelector(
-                    '#formCrearProceso .nombre'
-               )
-               const estado = document.querySelector(
-                    '#formCrearProceso .estado'
-               )
-               const fecha = document.querySelector('#formCrearProceso .fecha')
-               const data = {
-                    nombre: nombre.value,
-                    estado: estado.value,
-                    fecha: fecha.value
-               }
-               // Realizar la petición POST con Axios
-               axios.post(
-                    `${process.env.API_URL}${process.env.API_ADMINISTRADOR}/crear-proceso`,
-                    data
-               )
-                    .then((response) => {
-                         // Manejar la respuesta del servidor
-                         console.log('Respuesta del servidor:', response.data)
-                         if (response.data.affectedRows) {
-                              Swal.fire({
-                                   title: 'Correcto!',
-                                   text: 'Se registro correctamente',
-                                   icon: 'success',
-                                   confirmButtonText: 'Ok'
-                              })
-                              nombre.value = ''
-                              estado.value = ''
-                              fecha.value = ''
-                              btnCloseModalProceso.click()
-                              location.reload()
+               
+               Swal.fire({
+                    title: "Proceso?",
+                    text: "Quieres guardar el proceso?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                         const nombre = document.querySelector(
+                              '#formCrearProceso .nombre'
+                         )
+                         const estado = document.querySelector(
+                              '#formCrearProceso .estado'
+                         )
+                         const fecha = document.querySelector('#formCrearProceso .fecha')
+                         const data = {
+                              nombre: nombre.value,
+                              estado: estado.value,
+                              fecha: fecha.value
                          }
-                    })
-                    .catch((error) => {
-                         // Manejar errores de la petición
-                         console.error('Error en la petición:', error)
-                    })
+                         // Realizar la petición POST con Axios
+                         axios.post(
+                              `${API_URL}${API_ADMINISTRADOR}/crear-proceso`,
+                              data,
+                              axiosConfig
+                         )
+                              .then((response) => {
+                                   // Manejar la respuesta del servidor
+                                   console.log('Respuesta del servidor:', response.data)
+                                   if (response.data.affectedRows) {
+                                        Swal.fire({
+                                             title: 'Correcto!',
+                                             text: 'Se registro correctamente',
+                                             icon: 'success',
+                                             confirmButtonText: 'Ok'
+                                        })
+                                        nombre.value = ''
+                                        estado.value = ''
+                                        fecha.value = ''
+                                        btnCloseModalProceso.click()
+                                        location.reload()
+                                   }
+                              })
+                              .catch((error) => {
+                                   // Manejar errores de la petición
+                                   console.error('Error en la petición:', error)
+                              })
+
+                    }
+                  });
           })
      }
 })
+
+const searchEstudianteFromDNI = (dni) => {
+     containerSpinner.style.display = 'flex'
+     getDataEstudianteFromDNI({ dni }, (resp) => {
+          if (resp.data.length == 0) {
+               Toast.fire({
+                    icon: 'error',
+                    title: 'No se encontro estudiante con ese DNI'
+               })
+          } else {
+               const nombre_completo = `${resp.data[0].nombres} ${resp.data[0].apellido_p} ${resp.data[0].apellido_m}`
+               nombreEstudianteFormEstudiante.value = nombre_completo
+               Toast.fire({
+                    icon: 'success',
+                    title: 'Se encontro estudiante con ese DNI'
+               })
+          }
+          containerSpinner.style.display = 'none'
+     })
+}
+
+btnSearchEstudianteForDNIFormEstudiantes.addEventListener('click', () => {
+     const dni = dniEstudianteFormEstudiante.value
+     searchEstudianteFromDNI(dni)
+})
+
+
+const detenerIntervalo = () => {
+     clearInterval(intervaloToken);
+   }
+   // Suma una hora (3600 segundos) a la fecha actual
+   // const fechaMasUnaHora = new Date(fechaActual.getTime() + 3600 * 1000);
+   const fechaMasUnaHora = localStorage.getItem('fecha-expiracion')
+   // Obten la representación en milisegundos de la fecha resultante
+   
+   
+   
+   const checkToken = () => {
+     const fechaActual = new Date().getTime()
+     console.log('Tiempo A', fechaActual)
+     console.log('Tiempo B', fechaMasUnaHora)
+
+     const tiempoRestante = (fechaMasUnaHora - fechaActual) / 1000 / 60
+     console.log(tiempoRestante)
+     if(tiempoRestante < 0) {
+          Swal.fire({
+               title: "UNDAC?",
+               text: "Su sesion vencio!",
+               icon: "warning",
+               confirmButtonColor: "#3085d6",
+               confirmButtonText: "Listo"
+             }).then((result) => {
+               if (result.isConfirmed) {
+                    cerrarSesionEvent()
+                    location.reload()
+               }
+             });
+     }
+     else if(tiempoRestante < 5) {
+          Swal.fire({
+               title: "UNDAC?",
+               text: "Esta a punto de vencer tu sesion",
+               icon: "warning"
+          });
+       detenerIntervalo();
+       return
+     }
+     else if(fechaMasUnaHora > fechaActual) {
+       console.log("Todavia esta vigente tu token")
+       console.log('Restante de vigencia', (fechaMasUnaHora - fechaActual) / 1000 / 60)
+     }else {
+       console.log("El token ya no sirve")
+     }
+   }
+   const segundos = 60 * 4;
+   
+   const milisegundos = segundos * 1000;
+   
+   // 300000
+   // const fechaActual = new Date()
+   // console.log('Fecha ahora', fechaActual.getTime());
+   //  console.log('Fecha en una hora', fechaMasUnaHora);
+   // console.log('Restante', fechaActual.getTime() - fechaMasUnaHora)
+   const intervaloToken = setInterval(checkToken, milisegundos)
