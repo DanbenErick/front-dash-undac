@@ -1,0 +1,15 @@
+
+
+
+@import url("bootstrap.min.css");
+@import url("styles.css");
+@import url("spinner.css");
+@import url("material-ui-theme.css");
+@import url("theme-bootstrap.min.css"); 
+
+
+td {
+    
+    vertical-align: middle;
+    padding: 8px 24px !important;
+}

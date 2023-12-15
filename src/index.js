@@ -1,3 +1,9 @@
+import './js-public/bootstrap.min.js'
+import './js-public/font-awesome.js'
+// import './js-public/popper.min.js'
+
+
+
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import {
@@ -18,6 +24,8 @@ import './login.js'
 import './register.js'
 import './voucher.js'
 import './cerrar-sesion.js'
+import './verificar-no-token.js'
+import './verificar.js'
 import { cerrarSesionEvent } from './cerrar-sesion.js'
 import { API_ADMINISTRADOR, API_ESTUDIANTE, API_SISTEMA, API_URL } from './env.js'
 import { getDataEstudianteFromDNI } from './api/administrador.js'
@@ -149,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
                          apellidoPaternoModalEditarEstudiante. value = resp.data[0].apellido_p
                          apellidoMaternoModalEditarEstudiante. value = resp.data[0].apellido_m
                          nombresModalEditarEstudiante. value = resp.data[0].nombres
-                         programaEstudioModalEditarEstudiante. value = resp.data[0].codigo
+                         programaEstudioModalEditarEstudiante. value = resp.data[0].carrera
                          areaModalEditarEstudiante. value = resp.data[0].area2
                          sedeExamenModalEditarEstudiante. value = resp.data[0].sede_e
                          preparatoriaModalEditarEstudiante. value = resp.data[0].preparatoria
@@ -242,11 +250,19 @@ document.addEventListener('DOMContentLoaded', () => {
                          row.appendChild(estadoCell)
 
                          const fechaCell = document.createElement('td')
-                         const fechaText = document.createTextNode(item.nombre)
+                         const fechaText = document.createTextNode(item.fecha)
                          fechaCell.appendChild(fechaText)
                          row.appendChild(fechaCell)
+                         const btnCell = document.createElement('td')
+                         if(item.estado != 'cerrado') {
+                              // Repite el proceso para estado y fecha
+                              const btnText = (document.createElement('a'))
+                              btnText.classList.add('link-danger')
+                              btnText.innerHTML = "Cerrar"
+                              btnCell.appendChild(btnText)
+                         }
+                         row.appendChild(btnCell)
 
-                         // Repite el proceso para estado y fecha
 
                          table.appendChild(row)
                     }

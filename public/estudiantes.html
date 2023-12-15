@@ -8,12 +8,7 @@
      <meta name="description" content="" />
      <meta name="author" content="" />
      <title>Estudiantes - UNDAC</title>
-     <script src="js/verificar.js"></script>
-     <link href="css/styles.css" rel="stylesheet" />
-     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-     <link rel="stylesheet" href="css/theme-bootstrap.min.css" />
-     <link rel="stylesheet" href="css/spinner.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/themes@5.0.15/material-ui/material-ui.min.css">
+     <link rel="stylesheet" href="css/style-index.css">
 </head>
 
 <body class="sb-nav-fixed">
@@ -372,14 +367,15 @@
                <div class="modal-content">
                     <div class="modal-header">
                          <div class="mr-3">
-                              <button type="button" class="btn btn-primary btn-sm pr-4" id="btnRefreshDataModalEstudiantes"> <i class="fas fa-refresh"></i> </button>
+                              <button type="button" class="btn btn-primary btn-sm pr-4"
+                                   id="btnRefreshDataModalEstudiantes"> <i class="fas fa-refresh"></i> </button>
                          </div>
                          <h1 class="modal-title fs-5" id="exampleModalLabel">
                               ESTUDIANTES
                          </h1>
                          <button type="button" class="btn-close" id="btnCloseModalProceso" data-bs-dismiss="modal"
                               aria-label="Close"></button>
-                              
+
                     </div>
                     <div class="modal-body">
                          <table class="table" id="tableModalTodosEstudiantes">
@@ -401,7 +397,8 @@
 
 
      <!-- Modal editar inscriptor -->
-     <div class="modal fade modal-lg" id="modalEditarInscritos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+     <div class="modal fade modal-lg" id="modalEditarInscritos" data-bs-backdrop="static" data-bs-keyboard="false"
+          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
                <div class="modal-content">
                     <div class="modal-header">
@@ -415,8 +412,10 @@
                               <div class="mb-3 ">
                                    <label for="apellidoPaterno" class="form-label">DNI Estudiante</label>
                                    <div class="input-group">
-                                        <input class="form-control" type="text" placeholder="Numero" id="inputNumeroDNIModalEditarEstudiante" />
-                                        <button type="button" class="btn btn-outline-secondary" id="btnBuscarDatosEstudianteModalEditarEstudiante">
+                                        <input class="form-control" type="text" placeholder="Numero"
+                                             id="inputNumeroDNIModalEditarEstudiante" />
+                                        <button type="button" class="btn btn-outline-secondary"
+                                             id="btnBuscarDatosEstudianteModalEditarEstudiante">
                                              <i class="fas fa-search"></i>
                                         </button>
                                    </div>
@@ -425,17 +424,19 @@
                                    <!-- Apellido Paterno -->
                                    <div class="col-md-4 mb-3">
                                         <label for="apellidoPaterno" class="form-label">Apellido Paterno</label>
-                                        <input type="text" class="form-control" id="apellidoPaternoModalEditarEstudiante"
+                                        <input type="text" class="form-control"
+                                             id="apellidoPaternoModalEditarEstudiante"
                                              placeholder="Ingrese su apellido paterno" required>
                                    </div>
-     
+
                                    <!-- Apellido Materno -->
                                    <div class="col-md-4 mb-3">
                                         <label for="apellidoMaterno" class="form-label">Apellido Materno</label>
-                                        <input type="text" class="form-control" id="apellidoMaternoModalEditarEstudiante"
+                                        <input type="text" class="form-control"
+                                             id="apellidoMaternoModalEditarEstudiante"
                                              placeholder="Ingrese su apellido materno" required>
                                    </div>
-     
+
                                    <!-- Nombres -->
                                    <div class="col-md-4 mb-3">
                                         <label for="nombres" class="form-label">Nombres</label>
@@ -448,17 +449,18 @@
                                    <div class="mb-3 col-md-6">
                                         <label for="programaEstudio" class="form-label">Programa de Estudio</label>
                                         <select class="form-select" id="programaEstudioModalEditarEstudiante" required>
-                                             <option value="" disabled selected>Seleccione su programa de estudio</option>
+                                             <option value="" disabled selected>Seleccione su programa de estudio
+                                             </option>
                                              <!-- Agrega opciones según tus programas de estudio -->
                                              <option value="programa1">Programa 1</option>
                                              <option value="programa2">Programa 2</option>
                                         </select>
                                    </div>
-     
+
                                    <!-- Área -->
                                    <div class="mb-3 col-md-6">
                                         <label for="area" class="form-label">Área</label>
-                                        <input type="text" class="form-control" id="areaModalEditarEstudiante" placeholder="Ingrese su área de estudio" required>
+                                        <input type="text" class="form-control" id="areaModalEditarEstudiante" placeholder="Ingrese su área de estudio" required disabled>
                                    </div>
                               </div>
 
@@ -470,12 +472,13 @@
                                              <option value="" disabled selected>Seleccione su sede de examen</option>
                                         </select>
                                    </div>
-     
+
                                    <!-- Preparatoria -->
                                    <div class="mb-3 col-md-6">
                                         <label for="preparatoria" class="form-label">Preparatoria</label>
                                         <select class="form-select" id="preparatoriaModalEditarEstudiante" required>
-                                             <option value="" disabled selected>Seleccione su programa de estudio</option>
+                                             <option value="" disabled selected>Seleccione su programa de estudio
+                                             </option>
                                              <!-- Agrega opciones según tus programas de estudio -->
                                              <option value="si">Si</option>
                                              <option value="no">No</option>
@@ -486,24 +489,15 @@
                     </div>
                     <div class="modal-footer">
                          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                         <button type="button" class="btn btn-primary" id="btnGuardarCambiosEstudianteModalEditarEstudiante">
+                         <button type="button" class="btn btn-primary"
+                              id="btnGuardarCambiosEstudianteModalEditarEstudiante">
                               Guardar
                          </button>
                     </div>
                </div>
           </div>
      </div>
-
-
-
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-     </script>
-     <script src="js/scripts.js"></script>
      <script src="dist/bundle.js"></script>
-     <script>
-          nombreUsuarioDashboard.textContent =
-               localStorage.getItem('nombre')
-     </script>
 </body>
 
 </html>
