@@ -8590,6 +8590,7 @@
           text: "Se guardo correctamente los datos",
           icon: "success"
         });
+        formEstudiantePantallaPrincipal.reset();
       }
     }).catch((err) => {
       import_sweetalert2.default.fire({
@@ -8634,12 +8635,20 @@
         const nombreText = document.createTextNode(`${item.apellido_p} ${item.apellido_m} ${item.nombres}`);
         nombreCell.appendChild(nombreText);
         row.appendChild(nombreCell);
-        const estadoCell = document.createElement("td");
-        const estadoText = document.createTextNode(item.modalidad);
-        estadoCell.appendChild(estadoText);
-        row.appendChild(estadoCell);
+        const modalidadCell = document.createElement("td");
+        const modalidadText = document.createTextNode(item.modalidad);
+        modalidadCell.appendChild(modalidadText);
+        row.appendChild(modalidadCell);
+        const facultadCell = document.createElement("td");
+        const facultadText = document.createTextNode(item.FACULTAD);
+        facultadCell.appendChild(facultadText);
+        row.appendChild(facultadCell);
+        const carreraCell = document.createElement("td");
+        const carreraText = document.createTextNode(item.ESCUELA);
+        carreraCell.appendChild(carreraText);
+        row.appendChild(carreraCell);
         const fechaCell = document.createElement("td");
-        const fechaText = document.createTextNode(item.area2);
+        const fechaText = document.createTextNode(item.AREA2);
         fechaCell.appendChild(fechaText);
         row.appendChild(fechaCell);
         const sedeCell = document.createElement("td");
@@ -8724,7 +8733,6 @@
       `${API_URL}${API_ESTUDIANTE}/get-departamentos`,
       axiosConfig
     ).then((resp) => {
-      console.log(resp.data);
       resp.data.forEach(function(data) {
         var option = document.createElement("option");
         option.value = data.Departamento;
@@ -8738,8 +8746,13 @@
       `${API_URL}${API_ESTUDIANTE}/get-provincias?departamento=${departamento}`,
       axiosConfig
     ).then((resp) => {
+      selectProvinciaEstudiante.innerHTML = "";
+      let optionPrimera = document.createElement("option");
+      optionPrimera.value = "";
+      optionPrimera.text = "Selecciona..";
+      selectProvinciaEstudiante.add(optionPrimera);
       resp.data.forEach(function(data) {
-        var option = document.createElement("option");
+        let option = document.createElement("option");
         option.value = data.Provincia;
         option.text = data.Provincia;
         selectProvinciaEstudiante.add(option);
@@ -8747,10 +8760,15 @@
     });
   };
   var getDistritoForSelect = (departamento, provincia) => {
+    selectDistritoEstudiante.innerHTML = "";
     axios_default.get(
       `${API_URL}${API_ESTUDIANTE}/get-distritos?departamento=${departamento}&provincia=${provincia}`,
       axiosConfig
     ).then((resp) => {
+      let optionPrimera = document.createElement("option");
+      optionPrimera.value = "";
+      optionPrimera.text = "Selecciona..";
+      selectDistritoEstudiante.add(optionPrimera);
       resp.data.forEach(function(data) {
         var option = document.createElement("option");
         option.value = data.Distrito;
@@ -8765,6 +8783,8 @@
       axiosConfig
     ).then((resp) => {
       inputUbigeo.value = resp.data[0].ubigeo;
+    }).catch((err) => {
+      console.error("Ocurrio un error", err);
     });
   };
 
@@ -9089,7 +9109,7 @@
     location.reload();
   };
   document.addEventListener("DOMContentLoaded", () => {
-    if (window.location.pathname.includes("voucher.html") || window.location.pathname.includes("estudiantes.html") || window.location.pathname.includes("procesos.html")) {
+    if (window.location.pathname.includes("voucher.html") || window.location.pathname.includes("estudiantes.html") || window.location.pathname.includes("procesos.html") || window.location.pathname.includes("resultados.html")) {
       btnCerrarSesion.addEventListener("click", () => {
         cerrarSesionEvent();
       });
@@ -9115,7 +9135,8 @@
 
   // src/verificar.js
   document.addEventListener("DOMContentLoaded", () => {
-    if (window.location.pathname.includes("voucher.html") || window.location.pathname.includes("procesos.html") || window.location.pathname.includes("estudiantes.html")) {
+    const currentPath = window.location.pathname.toLowerCase();
+    if (currentPath.includes("voucher.html") || currentPath.includes("procesos.html") || currentPath.includes("estudiantes.html") || currentPath.includes("resultados.html")) {
       if (typeof localStorage !== "undefined") {
         const miItem = localStorage.getItem("token");
         nombreUsuarioDashboard.textContent = localStorage.getItem("nombre");
@@ -9129,6 +9150,59 @@
         console.log("El localStorage no est\xE1 disponible en este navegador.");
         window.location = "login.html";
       }
+    }
+  });
+
+  // src/api/resultadosApi.js
+  var tokenLocalStorage3 = localStorage.getItem("token");
+  var axiosConfig3 = {
+    headers: {
+      "Authorization": `Bearer ${tokenLocalStorage3}`,
+      "Content-Type": "multipart/form-data"
+    }
+  };
+  var registrarSolapaPrincipal = (data, callback) => {
+    axios_default.post(
+      `${API_URL}${API_ADMINISTRADOR}/registrar-solapa-principal`,
+      data,
+      axiosConfig3
+    ).then((resp) => {
+      callback(resp);
+    }).catch((err) => {
+      console.error(err);
+      containerSpinner.style.display = "none";
+    });
+  };
+  var registrarSolapaSecundaria = (data, callback) => {
+    axios_default.post(
+      `${API_URL}${API_ADMINISTRADOR}/registrar-solapa-secundario`,
+      data,
+      axiosConfig3
+    ).then((resp) => {
+      callback(resp);
+    }).catch((err) => {
+      console.error(err);
+      containerSpinner.style.display = "none";
+    });
+  };
+
+  // src/resultados.js
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.location.pathname.includes("resultados.html")) {
+      btnProcesarSolapaPrincipalFormResultados.addEventListener("click", () => {
+        const formData = new FormData();
+        formData.append("archivo", inputSolapaPrincipalFormResultados.files[0]);
+        registrarSolapaPrincipal(formData, (resp) => {
+          console.log(resp);
+        });
+      });
+      btnProcesarSolapaSecundariaFormResultados.addEventListener("click", () => {
+        const formData = new FormData();
+        formData.append("archivo", inputSolapaSecundarioFormResultados.files[0]);
+        registrarSolapaSecundaria(formData, (resp) => {
+          console.log(resp);
+        });
+      });
     }
   });
 
@@ -9158,10 +9232,10 @@
       return Promise.reject(error);
     }
   );
-  var tokenLocalStorage3 = localStorage.getItem("token");
-  var axiosConfig3 = {
+  var tokenLocalStorage4 = localStorage.getItem("token");
+  var axiosConfig4 = {
     headers: {
-      "Authorization": `Bearer ${tokenLocalStorage3}`,
+      "Authorization": `Bearer ${tokenLocalStorage4}`,
       "Content-Type": "application/json"
       // Puedes ajustar el tipo de contenido según tus necesidades
     }
@@ -9302,7 +9376,7 @@
       });
     }
     if (window.location.pathname.includes("procesos.html")) {
-      axios_default.get(`${API_URL}${API_ADMINISTRADOR}/get-procesos`, axiosConfig3).then((response) => {
+      axios_default.get(`${API_URL}${API_ADMINISTRADOR}/get-procesos`, axiosConfig4).then((response) => {
         console.log(response.data);
         const table = document.querySelector("table tbody");
         for (const item of response.data) {
@@ -9362,7 +9436,7 @@
             axios_default.post(
               `${API_URL}${API_ADMINISTRADOR}/crear-proceso`,
               data,
-              axiosConfig3
+              axiosConfig4
             ).then((response) => {
               console.log("Respuesta del servidor:", response.data);
               if (response.data.affectedRows) {

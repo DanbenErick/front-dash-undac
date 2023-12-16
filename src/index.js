@@ -26,6 +26,7 @@ import './voucher.js'
 import './cerrar-sesion.js'
 import './verificar-no-token.js'
 import './verificar.js'
+import './resultados.js'
 import { cerrarSesionEvent } from './cerrar-sesion.js'
 import { API_ADMINISTRADOR, API_ESTUDIANTE, API_SISTEMA, API_URL } from './env.js'
 import { getDataEstudianteFromDNI } from './api/administrador.js'
@@ -113,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
           selectDepartamentoEstudiante.addEventListener('change', () => {
+               
                getProvinciaForSelect(selectDepartamentoEstudiante.value)
           })
           selectProvinciaEstudiante.addEventListener('change', () => {

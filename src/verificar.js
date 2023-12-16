@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-     if (window.location.pathname.includes('voucher.html') || window.location.pathname.includes('procesos.html') || window.location.pathname.includes('estudiantes.html')) {
+     const currentPath = window.location.pathname.toLowerCase();
+     if (currentPath.includes('voucher.html') || currentPath.includes('procesos.html') || currentPath.includes('estudiantes.html') || currentPath.includes('resultados.html')) {
           if (typeof localStorage !== 'undefined') {
                // Recupera el valor del elemento del localStorage
                const miItem = localStorage.getItem('token')

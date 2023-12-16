@@ -47,6 +47,8 @@ const setDatosComplementarios = (data) => {
                          text: "Se guardo correctamente los datos",
                          icon: 'success'
                     })
+                    
+                    formEstudiantePantallaPrincipal.reset()
                }
           })
           .catch((err) => {
@@ -102,14 +104,25 @@ const getDatosEstudiantesModal = () => {
                nombreCell.appendChild(nombreText)
                row.appendChild(nombreCell)
      
-               // Repite el proceso para estado y fecha
-               const estadoCell = document.createElement('td')
-               const estadoText = document.createTextNode(item.modalidad)
-               estadoCell.appendChild(estadoText)
-               row.appendChild(estadoCell)
+               const modalidadCell = document.createElement('td')
+               const modalidadText = document.createTextNode(item.modalidad)
+               modalidadCell.appendChild(modalidadText)
+               row.appendChild(modalidadCell)
      
+               const facultadCell = document.createElement('td')
+               const facultadText = document.createTextNode(item.FACULTAD)
+               facultadCell.appendChild(facultadText)
+               row.appendChild(facultadCell)
+     
+               const carreraCell = document.createElement('td')
+               const carreraText = document.createTextNode(item.ESCUELA)
+               carreraCell.appendChild(carreraText)
+               row.appendChild(carreraCell)
+     
+
+
                const fechaCell = document.createElement('td')
-               const fechaText = document.createTextNode(item.area2)
+               const fechaText = document.createTextNode(item.AREA2)
                fechaCell.appendChild(fechaText)
                row.appendChild(fechaCell)
 
@@ -215,9 +228,6 @@ const getDepartamentosForSelect = () => {
           axiosConfig
      )
           .then((resp) => {
-               console.log(resp.data)
-
-               // Llenar las opciones dinámicamente
                resp.data.forEach(function (data) {
                     var option = document.createElement('option')
                     option.value = data.Departamento
@@ -232,9 +242,15 @@ const getProvinciaForSelect = (departamento) => {
           `${API_URL}${API_ESTUDIANTE}/get-provincias?departamento=${departamento}`,
           axiosConfig
      ).then((resp) => {
-          // Llenar las opciones dinámicamente
+          selectProvinciaEstudiante.innerHTML = ""
+          
+          let optionPrimera = document.createElement('option')
+          optionPrimera.value = ""
+          optionPrimera.text = "Selecciona.."
+          selectProvinciaEstudiante.add(optionPrimera)
+
           resp.data.forEach(function (data) {
-               var option = document.createElement('option')
+               let option = document.createElement('option')
                option.value = data.Provincia
                option.text = data.Provincia
                selectProvinciaEstudiante.add(option)
@@ -242,10 +258,15 @@ const getProvinciaForSelect = (departamento) => {
      })
 }
 const getDistritoForSelect = (departamento, provincia) => {
+     selectDistritoEstudiante.innerHTML = ""
      axios.get(
           `${API_URL}${API_ESTUDIANTE}/get-distritos?departamento=${departamento}&provincia=${provincia}`,
           axiosConfig
      ).then((resp) => {
+          let optionPrimera = document.createElement('option')
+          optionPrimera.value = ""
+          optionPrimera.text = "Selecciona.."
+          selectDistritoEstudiante.add(optionPrimera)
           resp.data.forEach(function (data) {
                var option = document.createElement('option')
                option.value = data.Distrito
@@ -261,6 +282,9 @@ const getUbigeo = (departamento, provincia, distrito) => {
           axiosConfig
      ).then((resp) => {
           inputUbigeo.value = resp.data[0].ubigeo
+     })
+     .catch(err => {
+          console.error('Ocurrio un error', err)
      })
 }
 export {
