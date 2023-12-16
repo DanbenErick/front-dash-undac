@@ -8540,7 +8540,7 @@
   } = axios_default;
 
   // src/env.js
-  var API_URL = "http://localhost:8000";
+  var API_URL = "https://back-undac.onrender.com";
   var API_SISTEMA = "/api/sistema";
   var API_ESTUDIANTE = "/api/estudiantes";
   var API_ADMINISTRADOR = "/api/administrador";

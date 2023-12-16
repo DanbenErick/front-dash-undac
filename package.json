@@ -4,7 +4,8 @@
      "description": "",
      "main": "index.js",
      "scripts": {
-          "build": "esbuild src/index.js --bundle --outfile=public/dist/bundle.js --watch",
+          "watch": "esbuild src/index.js --bundle --outfile=public/dist/bundle.js --watch",
+          "build": "esbuild src/index.js --bundle --outfile=public/dist/bundle.js",
           "format": "prettier --write ."
      },
      "keywords": [],
